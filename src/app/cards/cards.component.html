@@ -1,0 +1,41 @@
+<div class="container">
+    <div class="row justify-content-center pb-5" style="border-bottom: 2px solid black;">
+        <div class="col-xs-12 col-md-4 mt-4" *ngFor="let x of cards">
+            <div class="card" style="width: 18rem; height:25rem;">
+                <div class="card-body">
+                <h5 class="card-title">{{x.name}}</h5>
+                <p class="card-subtitle">Price : {{x.price}}</p>
+                <img src="{{x.img}}" class="img-responsive img-fluid">
+                <p class="card-text" style="font-size: 0.7rem;">{{x.desc}}</p>
+                <a class="btn btn-primary" #this (click)=add(x.name,x.price)>Add to chart</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Chart -->
+        <div class="container mt-5 pb-5" style="background-color: #d3ffa39e; border-bottom: 2px solid black;">
+            <h1>Added to chart :</h1>
+            <div class="row justify-content-between" *ngFor="let a of chart">
+                <div class="col-4">
+                    <h3>{{a.name}}</h3>
+                </div>
+                <div class="col-2">
+                    <h3>{{a.price}}</h3>
+                </div>
+            </div>
+        </div>
+
+    <!-- Total -->
+        <div class="container" style="background-color: #cdffe09c;">
+            <div class="row justify-content-between">
+                <div class="col-4">
+                    <h3>Total</h3>
+                </div>
+                <div class="col-2">
+                    <h3 #get >{{total}}</h3>
+                </div>
+            </div>
+            
+        </div>
+        <button (click)="buy()" class="btn btn-success" style="width:100%; letter-spacing:.8rem;">Buy</button>
+</div>
