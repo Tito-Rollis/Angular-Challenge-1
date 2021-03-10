@@ -13,6 +13,8 @@ export class CardsComponent implements OnInit {
   total: number = 0;
   tes: string = 'testing';
   added: boolean;
+  chart: Added[] = [];
+  removed: boolean = true;
 
   cards: Cards[] = [
     new Cards(
@@ -59,12 +61,26 @@ export class CardsComponent implements OnInit {
     ),
   ];
 
-  chart: Added[] = [];
-
-  add(s: string, p: number, i: number) {
-    this.chart.push(new Added(s, p));
-    this.total += parseInt(this.get.nativeElement.innerHTML) + p;
+  add(i: number) {
+    this.chart.push(new Added(this.cards[i].name, this.cards[i].price, true));
+    this.total +=
+      parseInt(this.get.nativeElement.innerHTML) + this.cards[i].price;
     this.cards[i].add = true;
+    if (this.total < 0) {
+      this.total = 0;
+    }
+    console.log('current total ' + this.total);
+  }
+
+  remove(i: number) {
+    this.chart.map((n) => {
+      if (n.name === this.cards[i].name) {
+        n.removed = !true;
+        this.cards[i].add = false;
+        this.total -= n.price;
+        console.log('current total ' + this.total);
+      }
+    });
   }
 
   buy() {
