@@ -61,28 +61,33 @@ export class CardsComponent implements OnInit {
     ),
   ];
 
+  constructor() {}
+
+  ngOnInit(): void {}
+
+  // Add to chart
   add(i: number) {
     this.chart.push(new Added(this.cards[i].name, this.cards[i].price, true));
-    this.total +=
-      parseInt(this.get.nativeElement.innerHTML) + this.cards[i].price;
+    this.total += this.cards[i].price;
     this.cards[i].add = true;
-    if (this.total < 0) {
-      this.total = 0;
-    }
-    console.log('current total ' + this.total);
   }
 
+  // Remove from chart
   remove(i: number) {
     this.chart.map((n) => {
       if (n.name === this.cards[i].name) {
         n.removed = !true;
         this.cards[i].add = false;
         this.total -= n.price;
-        console.log('current total ' + this.total);
+        this.chart.splice(
+          this.chart.findIndex((n) => n.name === this.cards[i].name),
+          1
+        );
       }
     });
   }
 
+  // Buying
   buy() {
     if (parseInt(this.get.nativeElement.innerHTML) > 1000) {
       alert("You don't have enough gold!");
@@ -92,8 +97,4 @@ export class CardsComponent implements OnInit {
       alert('Transaction success!');
     }
   }
-
-  constructor() {}
-
-  ngOnInit(): void {}
 }
